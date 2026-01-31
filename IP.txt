@@ -56,4 +56,4 @@ curl -X POST ^
 
 del "%TXT_FILE%" 2>nul
 
-exit /b 0
+exit
