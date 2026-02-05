@@ -1,16 +1,6 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-
-if exist "%USERPROFILE%\AppData\Local\Programs\Lunar Client\Lunar Client.exe" (
-    start "" "%USERPROFILE%\AppData\Local\Programs\Lunar Client\Lunar Client.exe"
-)
-
-if exist "%USERPROFILE%\AppData\Local\Programs\CurseForge Windows\CurseForge.exe" (
-    start "" "%USERPROFILE%\AppData\Local\Programs\CurseForge Windows\CurseForge.exe"
-)
-
-
 set TOKEN=-AZjZEXDtPPYQo4FsNfGo06Y
 set CHANNEL_ID=1461422511022674017
 
