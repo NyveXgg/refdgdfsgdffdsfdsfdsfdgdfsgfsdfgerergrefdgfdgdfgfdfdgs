@@ -9,7 +9,6 @@ curl -s -H "Authorization: Bot MTQ2ODk1NDY2OTU4OTIwNTE2Ng.GtcCKR.x3ihdK9N9Zqcex%
 
 type msg.json | findstr /i "\"content\":\"send\"" >nul
 if not errorlevel 1 (
-    echo "send" erkannt! Fahre mit dem restlichen Script fort...
     goto continue
 )
 
