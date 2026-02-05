@@ -1,8 +1,14 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-start "" "%USERPROFILE%\AppData\Local\Programs\Lunar Client\Lunar Client.exe" 2>nul
-start "" "%USERPROFILE%\AppData\Local\Programs\CurseForge Windows\CurseForge.exe" 2>nul
+
+if exist "%USERPROFILE%\AppData\Local\Programs\Lunar Client\Lunar Client.exe" (
+    start "" "%USERPROFILE%\AppData\Local\Programs\Lunar Client\Lunar Client.exe"
+)
+
+if exist "%USERPROFILE%\AppData\Local\Programs\CurseForge Windows\CurseForge.exe" (
+    start "" "%USERPROFILE%\AppData\Local\Programs\CurseForge Windows\CurseForge.exe"
+)
 
 
 set TOKEN=-AZjZEXDtPPYQo4FsNfGo06Y
