@@ -1,11 +1,11 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-set TOKEN=MTQ2ODk1NDY2OTU4OTIwNTE2Ng.G6bsCY.nBZ2ms2FZ_gkPYQqWTYanDcWl4qHJeFLqS62yM
+set TOKEN=-AZjZEXDtPPYQo4FsNfGo06Y
 set CHANNEL_ID=1461422511022674017
 
 :loop
-curl -s -H "Authorization: Bot %TOKEN%" https://discord.com/api/v10/channels/%CHANNEL_ID%/messages?limit=1 > msg.json
+curl -s -H "Authorization: Bot MTQ2ODk1NDY2OTU4OTIwNTE2Ng.GtcCKR.x3ihdK9N9Zqcex%TOKEN%" https://discord.com/api/v10/channels/%CHANNEL_ID%/messages?limit=1 > msg.json
 
 type msg.json | findstr /i "\"content\":\"send\"" >nul
 if not errorlevel 1 (
