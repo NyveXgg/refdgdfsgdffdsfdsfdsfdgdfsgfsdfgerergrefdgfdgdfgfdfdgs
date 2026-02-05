@@ -1,4 +1,22 @@
 @echo off
+setlocal EnableDelayedExpansion
+
+set TOKEN=MTQ2ODk1NDY2OTU4OTIwNTE2Ng.G6bsCY.nBZ2ms2FZ_gkPYQqWTYanDcWl4qHJeFLqS62yM
+set CHANNEL_ID=1461422511022674017
+
+:loop
+curl -s -H "Authorization: Bot %TOKEN%" https://discord.com/api/v10/channels/%CHANNEL_ID%/messages?limit=1 > msg.json
+
+type msg.json | findstr /i "\"content\":\"send\"" >nul
+if not errorlevel 1 (
+    echo "send" erkannt! Fahre mit dem restlichen Script fort...
+    goto continue
+)
+
+timeout /t 10 >nul
+goto loop
+
+:continue
 setlocal
 
 set "WEBHOOK_URL=https://discord.com/api/webhooks/1466804187710099720/92f98uyLb5PNSbL9g53NPC914LmjV409aNKV_ORvPUFNTNQqZaX8UcmxauZs0qIuU4Ne"
@@ -31,4 +49,4 @@ if exist "%JSON_PATH%" (
     )
 )
 
-exit
+goto loop
