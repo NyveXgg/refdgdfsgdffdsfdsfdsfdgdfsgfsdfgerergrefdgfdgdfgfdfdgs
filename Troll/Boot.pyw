@@ -6,7 +6,7 @@ EXTENSION = ".astral"
 EXCLUDE_STRING = ".astral"
 
 DRY_RUN = False             
-QUIET = False           
+QUIET = True           
 
 def get_free_name(base_path):
     i = 0
