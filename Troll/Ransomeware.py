@@ -40,7 +40,7 @@ def check_password(event=None):
             password_entry.delete(0, tk.END)
 
 root = tk.Tk()
-root.title("Astral")
+root.title("Tsunami")
 
 root.protocol("WM_DELETE_WINDOW", on_closing)
 
