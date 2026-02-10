@@ -1,9 +1,9 @@
 import os
 
 FOLDER = "C:\\Windows\\System32"         
-EXTENSION = ".astral"
+EXTENSION = ".tsunami"
 
-EXCLUDE_STRING = ".astral"
+EXCLUDE_STRING = ".tsunami"
 
 DRY_RUN = False             
 QUIET = True           
