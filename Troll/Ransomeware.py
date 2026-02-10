@@ -2,7 +2,7 @@ import tkinter as tk
 import os
 
 PASSWORD = "#+18701:1034+#"
-TEXT = "Passwort: #+18701:1034+#"
+TEXT = "RansomeWare V2"
 
 MAX_ATTEMPTS = 2
 
