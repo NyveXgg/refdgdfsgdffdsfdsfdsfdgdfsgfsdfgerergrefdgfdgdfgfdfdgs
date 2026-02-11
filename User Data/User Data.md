@@ -14,6 +14,9 @@
 -   lunarclient: 
 
 ## 4. Extra Infos
+- Tsunami Owner
+- Best leaker
+- Goat
 
 ---
 # exemple END
