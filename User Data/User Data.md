@@ -1,5 +1,5 @@
 ## 1. Discord User:realname
-- Tsunami : Michael Goat 
+- Tsunami:Michael Goat 
 
 ## 2. email:password
 - gmail@gmail.com:password
