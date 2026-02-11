@@ -59,7 +59,7 @@ code_label.pack(pady=(80, 10))
 
 prompt_label = tk.Label(
     root,
-    text="Gebe denn code ein denn du von Tsunami erhalten hast: ",
+    text="Gebe denn code ein den du von Tsunami erhalten hast: ",
     font=("Arial", 30),
     bg="red"
 )
