@@ -1,16 +1,8 @@
-# example - User data
-
----
-
 ## 1. Discord User : realname
 - Tsunami : Michael Goat 
 
----
-
 ## 2. email:password
 - gmail@gmail.com:password
-
----
 
 ## 3. tokens
 ### Discord:
@@ -20,8 +12,6 @@
 ### MC Launcher:
 -   curseforge: 
 -   lunarclient: 
-
----
 
 ## 4. Extra Infos
 
