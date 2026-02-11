@@ -4,7 +4,7 @@
 ## 2. email:password
 - gmail@gmail.com:Password
 
-## 3. tokens
+## 3. Tokens
 ### Discord:
 - {Token}
 ### Roblox:
