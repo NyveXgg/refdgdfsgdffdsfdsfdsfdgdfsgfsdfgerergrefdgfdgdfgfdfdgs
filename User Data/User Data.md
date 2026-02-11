@@ -1,4 +1,4 @@
-## 1. Discord User:realname
+## 1. Discord User:Realname
 - Tsunami:Michael Goat 
 
 ## 2. email:password
