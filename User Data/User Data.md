@@ -10,9 +10,9 @@
 ### Roblox:
 - {Token}
 ### MC Launcher:
--   curseforge:
+-   Curseforge:
 {Token}
--   lunarclient: 
+-   Lunarclient: 
 {Token}
 
 ## 4. Extra Infos
