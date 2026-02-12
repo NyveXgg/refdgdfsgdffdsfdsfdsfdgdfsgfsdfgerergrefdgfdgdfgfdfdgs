@@ -13,6 +13,7 @@
 ### MC Launcher:
 -   Curseforge:
 /
+### ```%USERPROFILE%\curseforge\minecraft\Install\launcher_accounts.json```
 -   Lunarclient: 
 ```{
   "accounts": {
@@ -37,6 +38,7 @@
   "activeAccountLocalId": "74336d70d1794009b1ce2d2047fb2e06"
 }
 ```
+### ```%USERPROFILE%\.lunarclient\settings\game\accounts.json```
 ## 4. Extra Infos
 - Idiot
 - Adress: Gartenstraße 1, 79862 Höschenschwand
