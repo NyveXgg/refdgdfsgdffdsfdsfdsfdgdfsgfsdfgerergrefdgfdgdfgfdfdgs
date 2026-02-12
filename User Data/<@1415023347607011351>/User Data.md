@@ -3,7 +3,7 @@
 
 ## 2. email:password
 - freund717514@gmail.com:egal9876
-- rpgerman355@gmail.com:lucky201234
+- rpgerman355@gmail.com:lucky201204
 
 ## 3. Tokens
 ### Discord:
