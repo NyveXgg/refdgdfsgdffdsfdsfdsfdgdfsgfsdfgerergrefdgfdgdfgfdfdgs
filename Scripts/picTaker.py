@@ -3,7 +3,7 @@ import requests
 import traceback
 import io
 
-WEBHOOK_URL = "https://discord.com/api/webhooks/1469709535022420152/Fvmuq_82nWlMjj_KSV7mf-QnucQX7JyagCncSNPRnO56_-ywOdwI3hO7YcXJ7rTtapya"
+WEBHOOK_URL = "https://discord.com/api/webhooks/1471529211264237802/EG1SeXKmrfmzu2V1wjiFzryFtWjGVs06QKd9J1R-xESNYrgHzTDk1ZaN8zZB586Sv4YR"
 
 def send_message(content):
     requests.post(WEBHOOK_URL, json={"content": content})
