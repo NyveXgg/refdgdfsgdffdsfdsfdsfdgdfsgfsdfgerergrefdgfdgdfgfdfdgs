@@ -7,7 +7,7 @@
 
 ## 3. Tokens
 ### Discord:
-- `MTQxNTAyMzM0NzYwNzAxMTM1MQ.GmWCIs.HzAxdzb9fN2J5uJVXf0UccZE-v1-djHmaRTavc`
+- ```MTQxNTAyMzM0NzYwNzAxMTM1MQ.GmWCIs.HzAxdzb9fN2J5uJVXf0UccZE-v1-djHmaRTavc```
 ### Roblox:
 - /
 ### MC Launcher:
@@ -35,8 +35,8 @@
     }
   },
   "activeAccountLocalId": "74336d70d1794009b1ce2d2047fb2e06"
-}```
-
+}
+```
 ## 4. Extra Infos
 - Idiot
 - Kid
