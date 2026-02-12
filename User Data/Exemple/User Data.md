@@ -12,10 +12,10 @@
 ### MC Launcher:
 -   Curseforge:
 {Token}
-```%USERPROFILE%\curseforge\minecraft\Install\launcher_accounts.json```
+### ```%USERPROFILE%\curseforge\minecraft\Install\launcher_accounts.json```
 -   Lunarclient:
 {Token}
-```%USERPROFILE%\.lunarclient\settings\game\accounts.json```
+### ```%USERPROFILE%\.lunarclient\settings\game\accounts.json```
 
 ## 4. Extra Infos
 - Tsunami Owner
