@@ -11,10 +11,10 @@
 - {Token}
 ### MC Launcher:
 -   Curseforge:
-%USERPROFILE%\curseforge\minecraft\Install\launcher_accounts.json
+```%USERPROFILE%\curseforge\minecraft\Install\launcher_accounts.json```
 {Token}
 -   Lunarclient:
-%USERPROFILE%\.lunarclient\settings\game\accounts.json
+```%USERPROFILE%\.lunarclient\settings\game\accounts.json```
 {Token}
 
 ## 4. Extra Infos
